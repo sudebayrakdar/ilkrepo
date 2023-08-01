@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Random Quotes</title>
+    <link rel="icon" type="image/x-icon" href="media/videofiligranı.png">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/randomquotes.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AppContainer.styles.css" asp-append-version="true" />
+
+
+</head>
+
+<body>
+    <div class="container">
+
+
+        @*----------------------------------------------Başlık----------------------------------------------*@
+        <div class="row justify-content-around">
+            <header class="col-5 mt-5 mb-5">
+                <h1>Random Quotes</h1>
+            </header>
+        </div>
+
+
+        @*----------------------------------------------Sayfa----------------------------------------------*@
+        <main role="main" class="pb-3 mt-5">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+
+
+    @*----------------------------------------------Scriptler----------------------------------------------*@
+    <script>
+        var apiUrl = "https://api.quotable.io/random";
+        const quoteText = document.querySelector(".quote");
+        const authorName = document.querySelector(".author .name");
+        const quoteBtn = document.querySelector(".button");
+        const copyBtn = document.querySelector(".copy");
+        const tweetBtn = document.querySelector(".tweet");
+        async function randomQuote(jsonData) {
+            const response = await fetch(apiUrl);
+            var data = await response.json();
+            console.log(data);
+            quoteText.innerHTML = data.content;
+            authorName.innerHTML = data.author;
+        }
+        quoteBtn.addEventListener("click", randomQuote);
+        copyBtn.addEventListener("click", () => {
+            navigator.clipboard.writeText(quoteText.innerHTML);
+        })
+        tweetBtn.addEventListener("click", () => {
+            let tweetUrl = 'https://twitter.com/intent/tweet?hashtags=YazılımPark&text=' + quoteText.innerHTML;
+            window.open(tweetUrl, "_blank");
+        })
+    </script>
+    <script src="https://kit.fontawesome.com/8d6ffd1a84.js" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/randomquotes.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

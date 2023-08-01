@@ -1,0 +1,98 @@
+﻿@model List<AppContainer.Models.AppContainerModel>
+@{
+    ViewData["Title"] = "To Do List";
+
+}
+<header>
+    <div class="container text-center ">
+        <h1>Click and Learn!</h1>
+    </div>
+</header>
+
+<div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+    <div class="row">
+        <div class="row">
+            @foreach (var app in Model)
+            {
+
+                <div class="col-md-3">
+                    <a href=@app.AppController>
+                        <div class="card d-flex position-relative flex-column">
+
+                            <div class="imgContainer"><img src=@app.Image class="img img-responsive" /></div>
+                            @* <div class="content">
+                        <h2> @app.AppName</h2>
+
+                        </div>
+                        <div class="app-name"> @app.AppName</div>
+                        <div class="app-text">@app.AppText</div>*@
+                            <div class="content">
+                               
+                                <h2> @app.AppName</h2>
+                                <p>@app.AppText</p>
+                                <p>
+                                   
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Css{
+    <link href="~/css/site.css" rel="stylesheet" />
+}
+@*<div class="container d-flex align-items-center justify-content-center position-relative flex-wrap">
+    <div class="card d-flex position-relative flex-column">
+        <a asp-action="Index" asp-controller="TodoList">
+        <div class='imgContainer'>
+            <img src='~/img/ToDoList_.webp'>
+        </div>
+        <div class="content">
+            <h2>To Do</h2>
+            <h2>List</h2>
+            <p>Sorts to-do items and creates a list.</p>
+        </div>
+        </a>
+    </div>
+    <div class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src='~/img/body.jpg'>
+        </div>
+        <div class="content">
+            <h2>Body Mass Index</h2>
+            <p>It is an application that calculates body mass index according to height and weight input.</p>
+        </div>
+    </div>
+    <div class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src='~/img/havaa.jpg'>
+
+
+        </div>
+        <div class="content">
+            <h2>Weather App</h2>
+
+            <p>It is an application that brings the weather information of a randomly entered city instantly.</p>
+            <p>Example:Milano 32°C</p>
+        </div>
+    </div>
+    <div class="card d-flex position-relative flex-column">
+        <div class='imgContainer'>
+            <img src='~/img/ağaç.jpg'>
+
+        </div>
+        <div class="content">
+            <h2>Random Quotations</h2>
+            <p>User can access a random quote and share it on twitter account.</p>
+            <p>
+                "Some things take time."
+
+            </p>
+        </div>
+    </div>
+</div>*@

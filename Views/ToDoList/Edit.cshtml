@@ -1,0 +1,53 @@
+﻿@*@model List<AppContainer.Models.TodoListModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2> To Do List </h2>
+
+<a asp-contoller="todoapp" asp-action="create">Create a new todo</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+              id
+            </th>
+            <th>
+               date
+            </th>
+            <th>
+               item
+            </th>
+            <th>
+                isdone
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.AddDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.TodoListItem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.IsDone)
+                </td>
+                <td>
+                    <a asp-controller="todoapp" asp-action="edit" asp-route-id="@item.Id">Düzenle |</a>
+                    <a asp-controller="todoapp" asp-action="remove" asp-route-id="@item.Id">Sil</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+*@

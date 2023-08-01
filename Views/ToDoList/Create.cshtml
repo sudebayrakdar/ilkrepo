@@ -1,0 +1,44 @@
+﻿@*@model AppContainer.Models.TodoListModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3> ADD NEW TASK</h3>
+<div class="row">
+<div class="col-md-4">
+    <form asp-action="Create"|></form>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3 form group">
+        <label asp-for="TodoListItem" class="control-label"></label>
+        <input asp-for="TodoListItem" class="form-control" />
+        <span asp-validation-for="TodoListItem" class="text-danger"></span>
+        
+    </div>
+    <div class="mb-3 form group">
+        <label asp-for="AddDate" class="control-label"></label>
+        <input asp-for="AddDate" class="form-control" />
+        <span asp-validation-for="AddDate" class="text-danger"></span>
+      </div>
+
+      <div class="mb-3 form-group form-check">
+         <input class="form-check-imput" asp-for="IsDone" >
+            <label>
+                <div class="form-check-imput" asp-for="IsDone"/>
+                Tamamlandı mı?
+            </label>
+          
+            </div>
+         
+           <div class="mb-3 form group">
+             <input type="submit" value="KAYDET" class="btn btn-primary"  />
+           </div>
+     
+    </div>
+            </div>
+            @section Scripts
+            {
+                <script src="~/lib/jquery-validatio/dist/jquery.validate.min.js"></script>
+                <script src="~/lib/jquery-validation-unobtrusive&/
+        jquery.validate.unobtrusive.min.js"></script>
+        }*@

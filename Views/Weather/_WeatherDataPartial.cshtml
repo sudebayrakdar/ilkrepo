@@ -1,0 +1,16 @@
+﻿
+
+@model WeatherModels
+@if (Model != null)
+{
+
+
+    <h3>@Model.Name</h3>
+    <p>Description: @Model.Weather[0].Description</p>
+    <p>Temp: @Model.Main.Temp</p>
+    <p>Wind:@Model.Wind.Speed</p>
+    <p>Pressure:@Model.Main.Pressure</p>
+
+
+}
+

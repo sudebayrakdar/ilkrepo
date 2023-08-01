@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "_ToDo";
+}
+
+
+@model List<ToDoList>
+
+@*----------------------------------------------Menüye Dön----------------------------------------------*@
+<a class="nav-link fixed-top text-start m-3 return" asp-area="" asp-controller="Home" asp-action="index">Back</a>
+
+
+
+<section class="container">
+    <div class="row mt-5">
+        <form class="form mt-5">
+            <div class="col-8 inputBox">
+                <input id="todo" placeholder="Add Something To Do" class="form__input ms-3 mt-3 mb-3" required>
+                <button id="btn-add" class="addBtn m-3"><span>Add</span></button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <ul class="toDoList">
+            @foreach (var list in Model)
+            {
+                <li data-id="@list.Id">@list.ToDoListItem</li>
+            }
+        </ul>
+    </div>
+</section>

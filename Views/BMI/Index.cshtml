@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "BMI";
+    Layout = "BMI";
+
+}
+@model BMIModel
+
+
+@*----------------------------------------------Menüye Dön----------------------------------------------*@
+<a class="nav-link fixed-top text-start m-3 return" asp-area="" asp-controller="Home" asp-action="index">Back</a>
+
+
+
+@*----------------------------------------------BMI Calculator----------------------------------------------*@
+<div class="container-fluid" id="bmicalc">
+    <div class="row">
+        <div class="row mt-5">
+            <div class="bmi">
+@*----------------------------------------------Bilgilerin Alındığı Form----------------------------------------------*@
+                <form>
+                    <h2>Informations</h2>
+@*----------------------------------------------Boy----------------------------------------------*@
+                    <div class="inputH inputBox">
+                        <input placeholder="Height" type="number" id="inputH" required>
+                    </div>
+@*----------------------------------------------Kilo----------------------------------------------*@
+                    <div class="inputW inputBox mt-5">
+                        <input placeholder="Weight" type="number" id="inputW" required>
+                    </div>
+                    @*----------------------------------------------İşlem Butonları----------------------------------------------*@
+                    <button type="submit" class="calculate" id="submit" value="submit">Calculate</button>
+                    <button href="#" class="reset" onclick="ResetPage()" id="reset">Reset</button>
+                </form>
+            </div>
+        </div>
+        @*----------------------------------------------Sonuç Formu----------------------------------------------*@
+        <div class="row mt-5">
+            <div class="res">
+                <form>
+                    <h2 data-language="result">Result</h2>
+                    <p>BMI</p>
+                    <h3 id="bmi-output">-</h3>
+                    <p>BMI Range</p>
+                    <h3 id="bmi-status">-</h3>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*----------------------------------------------Scriptler----------------------------------------------*@
+
+@section Scripts
+    {
+    @*----------------------------------------------BMI Bilgi Alma----------------------------------------------*@
+    <script>
+
+        document.getElementById('bmicalc').addEventListener("submit", (e) => {
+            e.preventDefault();
+            var hght = document.getElementById("inputH").value;
+            var wght = document.getElementById("inputW").value;
+
+            $.ajax(
+                {
+                    url: '@Url.Action("Index","BMI")',
+                    type: "POST",
+                    data:
+                    {
+                        Height: parseFloat(hght), Weight: parseFloat(wght)
+                    },
+                    success: function (data) {
+                        var data2 = JSON.parse(data);
+                        document.getElementById("bmi-output").textContent = data2.BMI;
+                        document.getElementById("bmi-status").textContent = data2.BMIRange;
+                    },
+                    error: function (err) {
+                        alert(err.statusText + " " + err.url)
+                    }
+                });
+        });
+    </script>
+    @*----------------------------------------------Sayfa Temizleme----------------------------------------------*@
+    <script>
+        function ResetPage() {
+            document.getElementById("inputH").value = "";
+            document.getElementById("inputW").value = "";
+            document.getElementById("bmi-output").innerHTML = "-";
+            document.getElementById("bmi-status").innerHTML = "-";
+        }
+    </script>
+}

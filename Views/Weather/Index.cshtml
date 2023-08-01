@@ -1,0 +1,219 @@
+﻿@*@model List<WeatherModels>
+@{
+    Layout = "Layout";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home";
+}
+
+<h2>Weather App</h2>
+
+<form id="wform">
+    <label for="city">City</label>
+    <input type="text" id="city"/>
+    <input  type="submit" value="Get Weather" />
+</form>
+<div class=“search mt-5 inputBox”>
+    <input class=“bosluk” type=“text” placeholder=“Change Location” spellcheck=“false”>
+    <br />
+    <button>Change</button>
+</div>
+<div class=“col info” style=“ font-size:40px”>
+    <div class=“location mt-3”>
+        <span class=“cityname”>Sakarya</span>
+        <span>,</span>
+        <span class=“countryname”>TR</span>
+    </div>
+
+    <div class=“degree mt-5”>
+        <h1 style=“font-size:50px” class=“temp”>29°C</h1>
+        <h2 style=“font-size:35px” class=“sunny”>Sunny</h2>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    foreach (var mod in Model)
+    {
+
+        <h3>@mod.Name</h3>
+        <p>Description: @mod.Weather[0].Description</p>
+        <p>Temp: @mod.Main.Temp</p>
+        <p>Wind:@mod.Wind.Speed</p>
+        <p>Pressure:@mod.Main.Pressure</p>
+    }
+   
+}
+
+@section Scripts{
+
+    <script>
+                <!-- Add a container to display the weather data-- >
+            <div id="weatherContainer" > </div>
+
+                <script>
+        // Function to fetch weather data via AJAX
+        function fetchWeatherData(cityName) {
+            fetch(`/Weather/SearchWeather?value=${encodeURIComponent(cityName)}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('weatherContainer').innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                });
+        }
+
+        // Function to handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const cityName = document.getElementById('cityInput').value;
+            fetchWeatherData(cityName);
+        }
+
+        // Add event listener to the form
+        document.getElementById('weatherForm').addEventListener('submit', handleFormSubmit);
+        <form id="weatherForm" >
+            <input type="text" id = "cityInput" placeholder = "Enter city name" />
+                <button type="submit" > Search < /button>
+                    < /form>
+
+                    < div id = "weatherContainer" > </div>
+
+    </script>
+
+            //$(document).ready(function () {
+            //$("#getWeatherBtn").on("click", function () {
+
+            //        var cityName = $("#cityName").val();
+            //        $.ajax({
+            //        url: "/ WeatherA / GetWeather," 
+            //            type: "GET",
+            //            data: { cityName: cityName },
+            //            success: function (result) {
+            //                console.log(result);
+            //                $("#weatherDataContainer").html(result);
+            //            },
+            //            error: function (error) {
+            //                $("#weatherDataContainer").html("Error: " + error.responseText);
+            //            }
+            //            });
+            //});
+            //    });
+    </script>
+}
+
+
+
+          
+    </script>
+     
+
+
+}*@
+  ﻿@{
+    ViewData["Title"] = "Weather Forecast";
+    Layout = "_Weather";
+}
+@model List<WeatherModel>
+
+
+
+@*----------------------------------------------Menüye Dön----------------------------------------------*@
+<a class="nav-link fixed-top text-start m-3 return" asp-area="" asp-controller="Home" asp-action="index">Back</a>
+
+
+
+
+@*----------------------------------------------Weather Forecast----------------------------------------------*@
+<div class="row">
+
+
+
+
+    @*----------------------------------------------Ana Kart----------------------------------------------*@
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="weather">
+            <div class="row justify-content-center">
+                <div class="col info">
+                    <h2>Today</h2>
+                    <div class="location">
+                        <i class="loc-icon fa-solid fa-location-dot"></i>
+                        <span class="cityname">Paris</span>
+                        <span>,</span>
+                        <span class="countryname">FR</span>
+                    </div>
+
+                    <div class="degree">
+                        <h1 class="temp">29°C</h1>
+                        <h2 class="sunny">Sunny</h2>
+                    </div>
+                </div>
+                <div class="col detail">
+                    <div class="details mt-5">
+                        <div class="press">
+                            <span class="title">PRESSURE</span>
+                            <span class="value pressure">1007 mb</span> <br />
+                        </div>
+                        <div class="humid">
+                            <span class="title">HUMIDITY</span>
+                            <span class="value humidity">12 %</span>
+                        </div>
+                        <div class="win">
+                            <span class="title">WIND</span>
+                            <span class="value wind">1.46 km/h</span>
+                        </div>
+                    </div>
+                    <div class="search mt-5 inputBox">
+                        <input type="text" placeholder="Change Location" spellcheck="false">
+                        <i class="fa-solid fa-location-dot inp-icon"></i>
+                        <button>Change</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @*----------------------------------------------Diğer Kartlar----------------------------------------------*@
+    <div class="col">
+        <div class="row">
+            @foreach (var app in Model)
+            {
+                <div class="col-lg-3 col-md-12 col-sm-12">
+                    <div class="weather">
+                        <h1 class="temp">
+                            @{
+                                var a = app.Main.Temp - 273.15;
+                                app.Main.Temp = a;
+                            } @app.Main.Temp.ToString("0")
+                            <span class="othercelcius">°C</span>
+                        </h1>
+                        <div class="location">
+                            <i class="loc-icon fa-solid fa-location-dot"></i>
+                            <span class="cityname">@app.Name</span>
+                            <span>,</span>
+                            <span class="countryname">@app.Sys.Country</span>
+                        </div>
+                        <div class="details mt-5">
+                            <div class="press mt-5">
+                                <span class="title">PRESSURE</span>
+                                <span class="value pressure">@app.Main.Pressure mb</span> <br />
+                            </div>
+                            <div class="humid mt-5">
+                                <span class="title">HUMIDITY</span>
+                                <span class="value humidity">@app.Main.Humidity %</span>
+                            </div>
+                            <div class="win mt-5">
+                                <span class="title">WIND</span>
+                                <span class="value wind">@app.Wind.Speed km/h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
